@@ -1,0 +1,16 @@
+<div class="gitlocation">
+  <div class="center">
+    <div class="gitlocation-logo"></div>
+    <div class="gitlocation-sublogo"></div>
+    <form [formGroup]="gitLocationForm" (ngSubmit)="show()" class="">
+      <label for="location">Finding collaborators by location and skillset made easy!</label>
+      <input name="location" #usernameInput type="text" (click)="selectAll(usernameInput)" class="form-control" formControlName="location"
+      />
+
+      <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Match Me</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="showBottom" id="results" #resultsDiv class="results">
+
+</div>

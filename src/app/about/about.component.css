@@ -1,0 +1,23 @@
+header {
+	color: white;
+	width: 100vw;
+	background: url('../../img/background.jpg') center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.gitmatch {
+	background: url('../../img/gitmatch-logo.png') center;
+	margin: auto;
+	height: 175px;
+	width: 175px;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.gitlocation {
+	background: url('../../img/gitmatch-location-logo.png') center;
+	margin: auto;
+	height: 175px;
+	width: 175px;
+	background-repeat: no-repeat;
+	background-size: contain;
+}

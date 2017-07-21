@@ -1,0 +1,64 @@
+.gitmatch {
+	background: url('../../img/background.jpg') center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	width: 100vw;
+	margin-left: 0;
+	margin-right: 0;
+}
+.gitmatch .center {
+	margin-top: -20%;
+	justify-content: center;
+	align-self: center;
+	width: 75%;
+	text-align: center;
+	color: white;
+}
+input {
+	margin-bottom: 10px;
+}
+.gitmatch-logo {
+	margin: 0 auto;
+	background-image: url('../../img/gitmatch-logo.png');
+	height: 150px;
+	width: 150px;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.gitmatch-sublogo {
+	margin: 0 auto;
+	background-image: url('../../img/match-page-img-desktop.png');
+	height: 50px;
+	width: 250px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+.results {
+	height: 100vh;
+	width: 100vw;
+	background: red; /* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(
+		left,
+		rgba(255, 0, 0, 0),
+		rgba(255, 0, 0, 1)
+	); /*Safari 5.1-6*/
+	background: -o-linear-gradient(
+		right,
+		rgba(255, 0, 0, 0),
+		rgba(255, 0, 0, 1)
+	); /*Opera 11.1-12*/
+	background: -moz-linear-gradient(
+		right,
+		rgba(255, 0, 0, 0),
+		rgba(255, 0, 0, 1)
+	); /*Fx 3.6-15*/
+	background: linear-gradient(
+		to right,
+		rgba(255, 0, 0, 0),
+		rgba(255, 0, 0, 1)
+	);
+}

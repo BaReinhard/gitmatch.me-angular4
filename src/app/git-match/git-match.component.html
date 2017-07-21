@@ -1,0 +1,16 @@
+<div class="gitmatch">
+  <div class="center">
+    <div class="gitmatch-logo"></div>
+    <div class="gitmatch-sublogo"></div>
+    <form [formGroup]="gitMatchForm" (ngSubmit)="show()" class="">
+      <label for="username">Get matched with nearby developers instantly!</label>
+      <input name="username" #usernameInput type="text" (click)="selectAll(usernameInput)" class="form-control" formControlName="username"
+      />
+
+      <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>Match Me</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="showBottom" id="results" #resultsDiv class="results">
+
+</div>

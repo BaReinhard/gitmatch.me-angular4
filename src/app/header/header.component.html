@@ -1,0 +1,26 @@
+<nav class="navbar navbar-default navbar-primary navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" (click)="toggleState()" data-toggle="collapse" data-target="#navbar"
+        aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/home">
+        <div class="nav-logo"></div>
+      </a>
+    </div>
+    <div (click)="toggleState()" id="navbar" class="navbar-collapse collapse" [ngClass]="{ 'in': !collapsed }">
+      <ul class="nav navbar-right navbar-nav">
+        <li><a routerLink="/match" routerLinkActive="active">MATCH <i class="fa fa-search"></i></a></li>
+        <li><a routerLink="/location" routerLinkActive="active">LOCATION <i class="fa fa-search"></i></a></li>
+        <li><a routerLink="/about" routerLinkActive="active">About</a></li>
+
+      </ul>
+
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+</nav>
