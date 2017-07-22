@@ -9,6 +9,8 @@ import { HeaderComponent } from './header/header.component';
 import { AboutComponent } from './about/about.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ScrollToModule } from 'ng2-scroll-to-el';
+import { GitMatchService } from './git-match.service';
+import { HttpModule } from '@angular/http';
 // Routes
 const appRoutes: Routes = [
 	{ path: 'match', component: GitMatchComponent },
@@ -33,11 +35,12 @@ const appRoutes: Routes = [
 	],
 	imports: [
 		BrowserModule,
-		RouterModule.forRoot(appRoutes, { enableTracing: true }),
+		RouterModule.forRoot(appRoutes, { enableTracing: false }),
 		ReactiveFormsModule,
 		ScrollToModule.forRoot(),
+		HttpModule,
 	],
-	providers: [],
+	providers: [GitMatchService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

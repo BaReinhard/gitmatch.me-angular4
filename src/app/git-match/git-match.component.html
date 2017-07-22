@@ -2,7 +2,7 @@
   <div class="center">
     <div class="gitmatch-logo"></div>
     <div class="gitmatch-sublogo"></div>
-    <form [formGroup]="gitMatchForm" (ngSubmit)="show()" class="">
+    <form [formGroup]="gitMatchForm" (ngSubmit)="getUserData(usernameInput.value,resultsDiv)" class="">
       <label for="username">Get matched with nearby developers instantly!</label>
       <input name="username" #usernameInput type="text" (click)="selectAll(usernameInput)" class="form-control" formControlName="username"
       />
@@ -14,3 +14,10 @@
 <div *ngIf="showBottom" id="results" #resultsDiv class="results">
 
 </div>
+
+<div *ngIf="loading" class="modal loading">
+  <h3 class="modal-title">
+    <p>{{loadingText}}...</p><i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span></h3>
+</div>
+<div id="overlay" *ngIf="overlay"></div>
