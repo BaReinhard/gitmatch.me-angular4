@@ -22,10 +22,11 @@ export class GitMatchComponent implements OnInit {
 
 	//Count for Expanded Search
 	expandedSearchCount: number = 0;
+	uniqueLang = {};
 
 	// Array of Local Developers User Data and Repos List
 	localDevs = []; //Array of objects {userData:{},repos:{}}
-
+	topMatches = [];
 	// Top Languages for End User
 	topUserLanguages = []; //Array of objects {language:"JavaScript",count:"3"}
 	constructor(
@@ -133,26 +134,27 @@ export class GitMatchComponent implements OnInit {
 	};
 	calculateGitMatchUserRepos = repos => {
 		this.setLoadingText('Parsing Languages');
-		let uniqueLang = {};
+		this.uniqueLang = {};
 		// Create and Weighted Unique Languages Object,
 
 		repos.forEach(data => {
 			if (
-				uniqueLang[data.language] === undefined &&
+				this.uniqueLang[data.language] === undefined &&
 				typeof data.language != typeof null
 			) {
-				uniqueLang[data.language] = 1;
+				this.uniqueLang[data.language] = 1;
 			} else if (typeof data.language != typeof null) {
-				uniqueLang[data.language] = uniqueLang[data.language] + 1;
+				this.uniqueLang[data.language] =
+					this.uniqueLang[data.language] + 1;
 			}
 		});
 		// From the Object into an array of objects
-		for (var key in uniqueLang) {
+		for (var key in this.uniqueLang) {
 			// skip loop if the property is from prototype
-			if (!uniqueLang.hasOwnProperty(key)) continue;
+			if (!this.uniqueLang.hasOwnProperty(key)) continue;
 			this.topUserLanguages.push({
 				language: key,
-				count: uniqueLang[key],
+				count: this.uniqueLang[key],
 			});
 		}
 		//Orders Top Languages in Order
@@ -170,6 +172,37 @@ export class GitMatchComponent implements OnInit {
 	calculateTopMatches = localDevs => {
 		this.setLoadingText('Calculating your top matches');
 		console.log(localDevs, 'local devsssss');
+
+		this.topMatches = localDevs.filter(data => {
+			console.log(data.repos.length);
+			if (data.repos.length > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		});
+		this.topMatches.map(data => {
+			let repoScore = 1;
+			data.repos.forEach(repo => {
+				if (this.uniqueLang[repo.language] !== undefined) {
+					repoScore = repoScore + this.uniqueLang[repo.language];
+				}
+			});
+			data.score = repoScore;
+		});
+		this.topMatches.sort((a, b) => {
+			if (a.score < b.score) {
+				return 1;
+			} else if (a.score > b.score) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		this.topMatches.forEach(data => {
+			console.log('Matching Score', data.score);
+		});
+		console.log(this.topMatches, 'Filtered Top matches');
 		this.logAllData();
 	};
 	logAllData = () => {
