@@ -13,7 +13,7 @@
 </div>
 <div *ngIf="showBottom" id="results" #resultsDiv class="results">
   <div *ngFor="let user of topMatches" class="row" style="margin-left:50px;">
-    <p>User Name: {{user.userData.login}} - Repo Count: {{user.repos.length}} - Matching Score: {{user.score}}</p>
+    <p>User Name: {{user.userData.login}} - Repo Count: {{user.repos.length}} - Matching Score: {{user.score+'%'}}</p>
   </div>
 </div>
 

@@ -23,7 +23,7 @@ export class GitMatchComponent implements OnInit {
 	//Count for Expanded Search
 	expandedSearchCount: number = 0;
 	uniqueLang = {};
-
+	GITMATCHFACTOR = 14.843474908426657;
 	// Array of Local Developers User Data and Repos List
 	localDevs = []; //Array of objects {userData:{},repos:{}}
 	topMatches = [];
@@ -188,7 +188,7 @@ export class GitMatchComponent implements OnInit {
 					repoScore = repoScore + this.uniqueLang[repo.language];
 				}
 			});
-			data.score = repoScore;
+			data.score = Math.log(repoScore) * this.GITMATCHFACTOR;
 		});
 		this.topMatches.sort((a, b) => {
 			if (a.score < b.score) {
