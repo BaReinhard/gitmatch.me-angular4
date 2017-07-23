@@ -10,6 +10,11 @@
 	margin-left: 0;
 	margin-right: 0;
 }
+.avatar {
+	width: 150px;
+	height: 150px;
+	border-radius: 10px;
+}
 .gitmatch .center {
 	margin-top: -20%;
 	justify-content: center;

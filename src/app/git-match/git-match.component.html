@@ -12,9 +12,25 @@
   </div>
 </div>
 <div *ngIf="showBottom" id="results" #resultsDiv class="results">
-  <div *ngFor="let user of topMatches" class="row" style="margin-left:50px;">
-    <p>User Name: {{user.userData.login}} - Repo Count: {{user.repos.length}} - Matching Score: {{user.score+'%'}}</p>
+
+  <!-- Searched Users Data -->
+  <div class="GitUserData">
+    <img class="avatar" [src]="gitMatchUser.userData.avatar_url" />
+    <p>{{gitMatchUser.userData.login}}</p>
+    <chart style="width:50%;height:50%;" [type]="GitUserType" [data]="GitUserData" [options]="GitUserOptions"></chart>
+
   </div>
+  <!-- Matched Users Data -->
+  <div class="GitUserData">
+    <img class="avatar" [src]="topMatches[currentGitMatchIndex].userData.avatar_url" />
+    <p>{{topMatches[currentGitMatchIndex].userData.login}} -- {{topMatches[currentGitMatchIndex].score}}</p>
+    <div *ngIf="topMatches[currentGitMatchIndex].userData.email" class="btn btn-primary">Email Me</div>
+    <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
+
+  </div>
+  <div *ngIf="next" class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex-1)">Previous Chart Data</div>
+  <div *ngIf="previous" class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex-1)">Next Chart Data</div>
+
 </div>
 
 <div *ngIf=" loading " class="modal loading ">
@@ -23,3 +39,8 @@
     <span class="sr-only ">Loading...</span></h3>
 </div>
 <div id="overlay " *ngIf="overlay "></div>
+<div *ngIf=" error " class="modal error ">
+  <h3 class="modal-title ">
+    <p>{{errorText}}...</p><i class="fa fa-error fa-3x fa-fw "></i>
+    <span class="sr-only ">Loading...</span></h3>
+</div>

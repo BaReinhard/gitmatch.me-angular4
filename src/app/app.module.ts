@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ScrollToModule } from 'ng2-scroll-to-el';
 import { GitMatchService } from './git-match.service';
 import { HttpModule } from '@angular/http';
+import { ChartModule } from 'angular2-chartjs';
 // Routes
 const appRoutes: Routes = [
 	{ path: 'match', component: GitMatchComponent },
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
 		ReactiveFormsModule,
 		ScrollToModule.forRoot(),
 		HttpModule,
+		ChartModule,
 	],
 	providers: [GitMatchService],
 	bootstrap: [AppComponent],

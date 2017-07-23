@@ -42,6 +42,7 @@ export class GitMatchService {
 		for (let i = 0; i < usernames.length; i++) {
 			observArray.push(this.getUserName(usernames[i].login));
 		}
+		console.log('Finished here');
 		return Observable.forkJoin(observArray);
 	};
 }
