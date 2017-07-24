@@ -181,6 +181,14 @@ export class GitMatchComponent implements OnInit {
 		this.expandedSearchCount = 0;
 		this.topUserLanguages = [];
 		this.gitMatchUser = {};
+		this.currentGitMatchData = [];
+		this.currentGitMatchLabels = [];
+		this.currentGitMatchOptions = [];
+		this.gitMatchUser = {};
+		this.GitUserData = [];
+		this.GitUserLabels = [];
+		this.GitUserOptions = [];
+		this.showBottom = false;
 	}
 	selectAll = el => {
 		el.select();
@@ -249,44 +257,53 @@ export class GitMatchComponent implements OnInit {
 				'You have no location in your github profile, please set that and try again',
 			);
 		} else {
-			// console.log('getLocal');
-			this.setLoadingText('Getting local users');
-			this.getMatchService
-				.getLocalDevelopers(location, language)
-				.subscribe(response => {
-					console.log(response);
-					let data = response.json();
-					this.setLoadingText('Getting local users repos');
-					if (data.total_count === 0) {
-						this.expandSearch(location);
-					} else {
-						this.getMatchService
-							.getAllUserRepos(data.items)
-							.subscribe(res => {
-								// console.log(res);
-								this.expandedSearchCount++;
-								if (res.length === 0) {
-								} else {
-									res.map((data: Array<Response>) => {
-										this.localDevs.push([
-											data[0].json(),
-											data[1].json(),
-										]);
-									});
-								}
+			this.getMatchService.getLocation(location).subscribe(
+				response => {
+					let locationData = response.json();
+					console.log(locationData);
+					location = locationData.results[0].address_components[0].short_name.toLowerCase();
+					this.gitMatchUser.userData.location = location;
+					// console.log('getLocal');
+					this.setLoadingText('Getting local users');
+					this.getMatchService
+						.getLocalDevelopers(location, language)
+						.subscribe(response => {
+							console.log(response);
+							let data = response.json();
+							this.setLoadingText('Getting local users repos');
+							if (data.total_count === 0) {
+								this.expandSearch(location);
+							} else {
+								this.getMatchService
+									.getAllUserRepos(data.items)
+									.subscribe(res => {
+										// console.log(res);
+										this.expandedSearchCount++;
+										if (res.length === 0) {
+										} else {
+											res.map((data: Array<Response>) => {
+												this.localDevs.push([
+													data[0].json(),
+													data[1].json(),
+												]);
+											});
+										}
 
-								console.log(this.localDevs);
-								if (
-									this.localDevs.length >= 10 &&
-									this.expandedSearchCount < 4
-								) {
-									this.formatLocalDevs(this.localDevs);
-								} else {
-									this.expandSearch(location);
-								}
-							}, this.errorHandler);
-					}
-				});
+										console.log(this.localDevs);
+										if (
+											this.localDevs.length >= 10 &&
+											this.expandedSearchCount < 4
+										) {
+											this.formatLocalDevs(this.localDevs);
+										} else {
+											this.expandSearch(location);
+										}
+									}, this.errorHandler);
+							}
+						});
+				},
+				error => {},
+			);
 		}
 	};
 	expandSearch = location => {
@@ -382,11 +399,13 @@ export class GitMatchComponent implements OnInit {
 			let repoScore = 1;
 			data.repos.forEach(repo => {
 				if (this.uniqueLang[repo.language] !== undefined) {
-					repoScore = repoScore + this.uniqueLang[repo.language];
 					// console.log(data.matchingLanguages);
 					if (data.matchingLanguages[repo.language] === undefined) {
+						repoScore = repoScore + Math.PI * 100;
 						data.matchingLanguages[repo.language] = 1;
 					} else {
+						repoScore =
+							repoScore + 1 * this.uniqueLang[repo.language];
 						data.matchingLanguages[repo.language] =
 							data.matchingLanguages[repo.language] + 1;
 					}

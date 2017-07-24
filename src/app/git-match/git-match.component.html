@@ -14,18 +14,45 @@
 <div *ngIf="showBottom" id="results" #resultsDiv class="results">
 
   <!-- Searched Users Data -->
-  <div class="GitUserData">
+  <div class="GitUserData col-sm-6">
     <img class="avatar" [src]="gitMatchUser.userData.avatar_url" />
-    <p>{{gitMatchUser.userData.login}}</p>
+    <p>{{gitMatchUser.userData.login}} -- {{gitMatchUser.userData.location}}</p>
     <chart style="width:50%;height:50%;" [type]="GitUserType" [data]="GitUserData" [options]="GitUserOptions"></chart>
 
   </div>
   <!-- Matched Users Data -->
-  <div class="GitUserData">
-    <img class="avatar" [src]="topMatches[currentGitMatchIndex].userData.avatar_url" />
-    <p>{{topMatches[currentGitMatchIndex].userData.login}} -- {{topMatches[currentGitMatchIndex].score}}</p>
-    <div *ngIf="topMatches[currentGitMatchIndex].userData.email" class="btn btn-primary">Email Me</div>
-    <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
+  <div class="GitUserData col-sm-6">
+    <div class="btn-container">
+      <button class="btn btn-success previous">Previous</button>
+      <div class="match-percent">{{topMatches[currentGitMatchIndex].score}}</div>
+      <button class="btn btn-success next">Next</button>
+    </div>
+    <div class="profile">
+      <div class="avatar-container col-md-3">
+        <img class="avatar" [src]="topMatches[currentGitMatchIndex].userData.avatar_url" />
+
+      </div>
+      <div class="profile-info col-md-9">
+        <p class="name">{{topMatches[currentGitMatchIndex].userData.login}}</p>
+        <p class="location"><i class="fa fa-map-marker"></i> Location: {{topMatches[currentGitMatchIndex].userData.location}}</p>
+      </div>
+
+    </div>
+    <hr/>
+    <div class="match-results">
+      <h3>Languages</h3>
+      <p>{{topMatches[currentGitMatchIndex].userData.login}} -- {{topMatches[currentGitMatchIndex].score}} -- {{topMatches[currentGitMatchIndex].userData.location}}</p>
+      <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
+      <hr/>
+      <div class="user-stats">
+        <div class="repos">{{topMatches[currentGitMatchIndex].repos.length}}</div>
+        <div class="followers">{{topMatches[currentGitMatchIndex].userData.followers}}</div>
+        <div *ngIf="topMatches[currentGitMatchIndex].userData.email" class="collaborate">
+          <div class="btn btn-primary">Email Me</div>
+        </div>
+      </div>
+
+    </div>
 
   </div>
   <div class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex+1)">Next Chart Data</div>

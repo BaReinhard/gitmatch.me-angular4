@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
-import { ACCESS_TOKEN } from './.constants';
+import { ACCESS_TOKEN, GEOCODING } from './.constants';
 const headers = new Headers({
 	Authorization: `token ${ACCESS_TOKEN}`,
 });
@@ -11,6 +11,13 @@ export class GitMatchService {
 	constructor(private http: Http) {}
 	encode = str => {
 		return encodeURIComponent(str);
+	};
+	getLocation = location => {
+		location = this.encode(location.toLowerCase());
+		console.log(location);
+		return this.http.get(
+			`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${GEOCODING}`,
+		);
 	};
 	getUserName = username => {
 		username = this.encode(username);

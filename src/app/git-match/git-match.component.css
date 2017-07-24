@@ -10,11 +10,48 @@
 	margin-left: 0;
 	margin-right: 0;
 }
+.profile {
+	display: inline;
+}
+.btn-container {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 10px;
+	background-color: #2f2;
+	text-align: center;
+
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+}
+.previous {
+	float: left;
+	box-sizing: border-box;
+	width: 25%;
+}
+.next {
+	float: right;
+	box-sizing: border-box;
+	width: 25%;
+}
+.match-percent {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	float: center;
+	box-sizing: border-box;
+	width: 50%;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
 .avatar {
+	box-sizing: border-box;
 	width: 150px;
 	height: 150px;
 	border-radius: 10px;
 }
+
 .gitmatch .center {
 	margin-top: -20%;
 	justify-content: center;
