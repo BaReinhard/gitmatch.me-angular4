@@ -33,6 +33,7 @@ export class GitMatchComponent implements OnInit {
 	currentGitMatchOptions = {};
 	currentGitMatchIndex = 0;
 
+	languageToken = '';
 	//Count for Expanded Search
 	expandedSearchCount: number = 0;
 	uniqueLang = {};
@@ -40,7 +41,7 @@ export class GitMatchComponent implements OnInit {
 	GITMATCHFACTOR = 14.843474908426657;
 	// Array of Local Developers User Data and Repos List
 	localDevs = []; //Array of objects {userData:{},repos:{}}
-	topMatches = [];
+	topMatches = []; // Array of Top Matches
 
 	// Top Languages for End User
 	topUserLanguages = []; //Array of objects {language:"JavaScript",count:"3"}
@@ -56,6 +57,20 @@ export class GitMatchComponent implements OnInit {
 	}
 
 	ngOnInit() {}
+	getLanguageToken = uniqueLang => {
+		this.languageToken = '';
+		console.log('UNIQUE LANGUAGES', uniqueLang);
+		let topCount = uniqueLang[0].count;
+		uniqueLang
+			// .filter(l => {
+			// 	return l.count + 7 >= topCount;
+			// })
+			.forEach(data => {
+				this.languageToken +=
+					'+language:' +
+					encodeURIComponent(data.language.split(' ').join('-'));
+			});
+	};
 	genChart = (element, type, gituserdata, gitmatchdata) => {
 		console.log('element', element);
 		console.log('Type', type);
@@ -213,19 +228,22 @@ export class GitMatchComponent implements OnInit {
 			});
 			if (Array.isArray(data[0])) {
 				this.gitMatchUser = { userData: data[1], repos: data[0] };
-				this.getLocalUsers(this.gitMatchUser.userData.location);
 			} else {
 				this.gitMatchUser = { userData: data[0], repos: data[1] };
-
-				this.getLocalUsers(this.gitMatchUser.userData.location);
 			}
+
+			this.calculateGitMatchUserRepos(this.gitMatchUser.repos);
+			this.getLocalUsers(
+				this.gitMatchUser.userData.location,
+				this.languageToken,
+			);
 
 			// this.getLocalUsers()
 			// this.show(element);
 		}, this.errorHandler);
 	};
 
-	getLocalUsers = location => {
+	getLocalUsers = (location, language) => {
 		if (typeof location === typeof null) {
 			this.errorHandler(
 				'You have no location in your github profile, please set that and try again',
@@ -234,8 +252,9 @@ export class GitMatchComponent implements OnInit {
 			// console.log('getLocal');
 			this.setLoadingText('Getting local users');
 			this.getMatchService
-				.getLocalDevelopers(location)
+				.getLocalDevelopers(location, language)
 				.subscribe(response => {
+					console.log(response);
 					let data = response.json();
 					this.setLoadingText('Getting local users repos');
 					if (data.total_count === 0) {
@@ -276,7 +295,7 @@ export class GitMatchComponent implements OnInit {
 		console.log(`Expanded Search to ${newLocation}`);
 		//Some New Location,
 		if (location !== newLocation) {
-			this.getLocalUsers(newLocation);
+			this.getLocalUsers(newLocation, this.languageToken);
 		}
 	};
 	formatLocalDevs = localDevs => {
@@ -304,9 +323,10 @@ export class GitMatchComponent implements OnInit {
 				return true;
 			}
 		});
+		this.calculateTopMatches(this.localDevs);
 
 		// console.log('Check out localDevs now', this.localDevs);
-		this.calculateGitMatchUserRepos(this.gitMatchUser.repos);
+		// this.calculateGitMatchUserRepos(this.gitMatchUser.repos);
 	};
 	calculateGitMatchUserRepos = repos => {
 		this.setLoadingText('Parsing Languages');
@@ -343,7 +363,8 @@ export class GitMatchComponent implements OnInit {
 				return 0;
 			}
 		});
-		this.calculateTopMatches(this.localDevs);
+		this.getLanguageToken(this.topUserLanguages);
+		// this.calculateTopMatches(this.localDevs);
 	};
 	calculateTopMatches = localDevs => {
 		this.setLoadingText('Calculating your top matches');

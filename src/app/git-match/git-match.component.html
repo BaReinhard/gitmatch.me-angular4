@@ -28,8 +28,7 @@
     <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
 
   </div>
-  <div *ngIf="next" class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex-1)">Previous Chart Data</div>
-  <div *ngIf="previous" class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex-1)">Next Chart Data</div>
+  <div class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex+1)">Next Chart Data</div>
 
 </div>
 

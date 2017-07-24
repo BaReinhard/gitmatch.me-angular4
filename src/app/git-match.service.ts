@@ -9,7 +9,11 @@ const headers = new Headers({
 @Injectable()
 export class GitMatchService {
 	constructor(private http: Http) {}
+	encode = str => {
+		return encodeURIComponent(str);
+	};
 	getUserName = username => {
+		username = this.encode(username);
 		let observArray = [];
 		observArray.push(
 			this.http.get(`https://api.github.com/users/${username}`, {
@@ -18,24 +22,26 @@ export class GitMatchService {
 		);
 		observArray.push(
 			this.http.get(
-				`https://api.github.com/users/${username}/repos`,
+				`https://api.github.com/users/${username}/repos?page=1&per_page=100&sort=updated`,
 				{ headers: headers },
 			),
 		);
 		return Observable.forkJoin(observArray);
 	};
-	getUserRepos = repo => {
-		return this.http.get(`https://api.github.com`);
-	};
-	getLocalDevelopers = location => {
+
+	getLocalDevelopers = (location, language) => {
 		location = this.removeSpace(location);
+		location = this.encode(location);
+		console.log(
+			`https://api.github.com/search/users?q=location%3A${location}${language}`,
+		);
 		return this.http.get(
-			`https://api.github.com/search/users?q=location%3A${location}`,
+			`https://api.github.com/search/users?q=location%3A${location}${language}`,
 			{ headers: headers },
 		);
 	};
 	removeSpace(string) {
-		return string.split(' ').join('+');
+		return string.split(' ').join('-');
 	}
 	getAllUserRepos = usernames => {
 		let observArray = [];
