@@ -12,151 +12,155 @@
   </div>
 </div>
 <div *ngIf="showBottom" id="results" #resultsDiv class="results">
+  <div class="container app-container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- User Infor Display -->
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="well profile">
+                <div class="match-box  col-xs-12 col-sm-12 col-md-12 text-center ">
 
-  <!-- Searched Users Data -->
-  <div class="GitUserData col-sm-6">
-    <div class="btn-container">
-      <button class="btn btn-success previous">Previous</button>
-      <div class="match-percent">{{topMatches[currentGitMatchIndex].score}}</div>
-      <button class="btn btn-success next">Next</button>
-    </div>
-    <div class="profile col-sm-12">
-      <div class="avatar-container col-sm-4">
-        <img class="avatar" [src]="topMatches[currentGitMatchIndex].userData.avatar_url" />
+                  <h3>{{'{'}}MATCH<i class="fa fa-check" aria-hidden="true"></i>{{'}'}} </h3>
+                </div>
 
-      </div>
-      <div class="profile-info col-sm-8">
-        <p class="name">{{topMatches[currentGitMatchIndex].userData.login}}</p>
-        <p class="location"><i class="fa fa-map-marker"></i> Location: {{topMatches[currentGitMatchIndex].userData.location}}</p>
-      </div>
+                <div class="col-sm-12">
+                  <div class="col-xs-12 col-sm-12 col-md-4 text-center">
+                    <figure>
+                      <a [href]="gitMatchUser.html_url">
+                                                <img class="img-responsive git-user-avatar" [src]="gitMatchUser.userData.avatar_url" alt="user-avatar" />
+                                            </a>
+                    </figure>
+                  </div>
+                  <div class="col-xs-12 col-sm-12  col-sm-8">
+                    <h2> {{gitMatchUser.userData.login}}</h2>
+                    <p><strong><i class="fa fa-map-marker" aria-hidden="true"></i> Location: </strong> {{gitMatchUser.userData.location}}
+                    </p>
+                    <!--<p><strong>Bio: </strong>{{userData.bio}} </p>-->
 
-    </div>
-    <div class="match-results">
-      <hr/>
+                  </div>
 
-      <h3>Languages</h3>
-      <p>{{topMatches[currentGitMatchIndex].userData.login}} -- {{topMatches[currentGitMatchIndex].score}} -- {{topMatches[currentGitMatchIndex].userData.location}}</p>
-      <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
-      <hr/>
-      <div class="user-stats">
-        <!-- Show if email found-->
-        <div *ngIf="topMatches[currentGitMatchIndex].userData.email" class="col-xs-12 divider text-center">
-          <div class="col-xs-12 col-sm-4 emphasis">
-            <p>Repos</p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.public_repos}} </strong></h2>
+                </div>
+                <div class="col-md-12 divider ">
+                  <h4><strong>Languages</strong></h4>
 
-            <a class="btn btn-info btn-block"><span class="fa fa-code"></span> View Repos </a>
+                  <chart style="width:50%;height:50%;" [type]="GitUserType" [data]="GitUserData" [options]="GitUserOptions"></chart>
+
+                </div>
+                <div class="col-xs-12 divider text-center">
+                  <div class="col-xs-12 col-sm-6 emphasis">
+                    <p>Repos</p>
+                    <h2><strong> {{gitMatchUser.public_repos}} </strong></h2>
+
+                    <a class="btn btn-info btn-block" href="http://github.com/gitMatchUser.login?tab=repositories"><span class="fa fa-code"></span> View Repos </a>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 emphasis">
+                    <p><small>Followers</small></p>
+                    <h2><strong> {{gitMatchUser.followers}} </strong></h2>
+                    <!-- Place this tag where you want the button to render. -->
+                    <a class="btn btn-default btn-block" [href]="gitMatchUser.html_url"><span class="fa fa-github "></span> Follow </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-12 col-sm-4 emphasis">
-            <p><small>Followers</small></p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.followers}} </strong></h2>
-            <!-- Place this tag where you want the button to render. -->
-            <a class="btn btn-default btn-block"><span class="fa fa-github "></span> Follow </a>
-          </div>
-          <div class="col-xs-12 col-sm-4 emphasis alert-success">
-            <p><small><strong>Collaborate!</strong></small></p>
-            <h2><strong> <i class="fa fa-handshake-o" aria-hidden="true"></i> </strong></h2>
-            <a class="btn btn-success btn-block" data-target="#request-modal" role="button" data-toggle="modal"><span class=" fa fa-envelope-o "></span> Send Request</a>
 
-          </div>
         </div>
-        <!-- Show if email not found-->
-        <div *ngIf="!topMatches[currentGitMatchIndex].userData.email" class="col-xs-12 divider text-center">
-          <div class="col-xs-12 col-sm-6 emphasis">
-            <p>Repos</p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.public_repos}} </strong></h2>
+        <!-- Matches Display-->
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12 ">
+              <div class="well profile-matches">
+                <div class="match-box col-xs-12 col-sm-12 col-md-12 text-center alert-success">
+                  <div class="col-xs-4 col-sm-4 col-md-3 ">
+                    <button class="btn btn-success match-button" *ngIf="currentGitMatchIndex >=1" (click)="switchGitMatchChart(currentGitMatchIndex-1)"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous</button>
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-6">
+                    <h3>{{'{'}}<span *ngIf="topMatches[currentGitMatchIndex].score > 50">{{topMatches[currentGitMatchIndex].score}}% </span>                      MATCH<i class="fa fa-check" aria-hidden="true"></i>{{'}'}}
+                    </h3>
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-3">
+                    <button class="btn btn-success match-button" *ngIf="currentGitMatchIndex <=3" (click)="switchGitMatchChart(currentGitMatchIndex+1)">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                  </div>
 
-            <a class="btn btn-info btn-block"><span class="fa fa-code"></span> View Repos </a>
+                </div>
+                <div class="col-sm-12">
+
+                  <div class="col-xs-12 col-sm-12 col-md-4 text-center ">
+                    <figure>
+                      <a [href]="topMatches[currentGitMatchIndex].userData.html_url">
+                                                <img class="img-responsive git-user-avatar" [src]="topMatches[currentGitMatchIndex].userData.avatar_url" alt="user-avatar" />
+                                            </a>
+                    </figure>
+                  </div>
+                  <div class="col-xs-12 col-sm-12  col-sm-8">
+                    <h2> {{topMatches[currentGitMatchIndex].userData.login}}</h2>
+                    <p><strong><i class="fa fa-map-marker" aria-hidden="true"></i> Location: </strong> {{topMatches[currentGitMatchIndex].userData.location}}
+                    </p>
+                    <!--<p><strong>Email: </strong>{{currentMatch.email}} </p>-->
+
+                  </div>
+
+                </div>
+                <div class="col-md-12 divider ">
+                  <h4><strong>Matching Languages</strong></h4>
+                  <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
+
+                </div>
+                <!-- Show if email found-->
+                <div *ngIf="topMatches[currentGitMatchIndex].userData.email" class="col-xs-12 divider text-center">
+                  <div class="col-xs-12 col-sm-4 emphasis">
+                    <p>Repos</p>
+                    <h2><strong> {{topMatches[currentGitMatchIndex].userData.public_repos}} </strong></h2>
+
+                    <a class="btn btn-info btn-block" href="http://github.com/{{topMatches[currentGitMatchIndex].userData.login}}?tab=repositories"><span class="fa fa-code"></span> View Repos </a>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 emphasis">
+                    <p><small>Followers</small></p>
+                    <h2><strong> {{topMatches[currentGitMatchIndex].userData.followers}} </strong></h2>
+                    <!-- Place this tag where you want the button to render. -->
+                    <a class="btn btn-default btn-block" [href]="topMatches[currentGitMatchIndex].userData.html_url"><span class="fa fa-github "></span> Follow </a>
+                  </div>
+                  <div class="col-xs-12 col-sm-4 emphasis alert-success">
+                    <p><small><strong>Collaborate!</strong></small></p>
+                    <h2><strong> <i class="fa fa-handshake-o" aria-hidden="true"></i> </strong></h2>
+                    <a class="btn btn-success btn-block" data-target="#request-modal" role="button" data-toggle="modal"><span class=" fa fa-envelope-o "></span> Send Request</a>
+
+                  </div>
+                </div>
+                <!-- Show if email not found-->
+                <div *ngIf="!topMatches[currentGitMatchIndex].userData.email" class="col-xs-12 divider text-center">
+                  <div class="col-xs-12 col-sm-6 emphasis">
+                    <p>Repos</p>
+                    <h2><strong> {{topMatches[currentGitMatchIndex].userData.public_repos}} </strong></h2>
+
+                    <a class="btn btn-info btn-block" href="http://github.com/{{topMatches[currentGitMatchIndex].userData.login?tab=repositories"><span class="fa fa-code"></span> View Repos </a>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 emphasis">
+                    <p><small>Followers</small></p>
+                    <h2><strong> {{topMatches[currentGitMatchIndex].userData.followers}} </strong></h2>
+                    <!-- Place this tag where you want the button to render. -->
+                    <a class="btn btn-default btn-block" [href]="topMatches[currentGitMatchIndex].userData.html_url"><span class="fa fa-github "></span> Follow </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-12 col-sm-6 emphasis">
-            <p><small>Followers</small></p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.followers}} </strong></h2>
-            <!-- Place this tag where you want the button to render. -->
-            <a class="btn btn-default btn-block"><span class="fa fa-github "></span> Follow </a>
-          </div>
+
         </div>
       </div>
-
     </div>
 
   </div>
-  <!-- Matched Users Data -->
-  <div class="GitUserData col-sm-6">
-    <div class="btn-container">
-      <button class="btn btn-success previous">Previous</button>
-      <div class="match-percent">{{topMatches[currentGitMatchIndex].score}}</div>
-      <button class="btn btn-success next">Next</button>
-    </div>
-    <div class="profile col-sm-12">
-      <div class="avatar-container col-sm-4">
-        <img class="avatar" [src]="topMatches[currentGitMatchIndex].userData.avatar_url" />
-
-      </div>
-      <div class="profile-info col-sm-8">
-        <p class="name">{{topMatches[currentGitMatchIndex].userData.login}}</p>
-        <p class="location"><i class="fa fa-map-marker"></i> Location: {{topMatches[currentGitMatchIndex].userData.location}}</p>
-      </div>
-
-    </div>
-    <div class="match-results">
-      <hr/>
-
-      <h3>Languages</h3>
-      <p>{{topMatches[currentGitMatchIndex].userData.login}} -- {{topMatches[currentGitMatchIndex].score}} -- {{topMatches[currentGitMatchIndex].userData.location}}</p>
-      <chart style="width:50%;height:50%;" [type]="currentGitMatchType" [data]="currentGitMatchData" [options]="currentGitMatchOptions"></chart>
-      <hr/>
-      <div class="user-stats">
-        <!-- Show if email found-->
-        <div *ngIf="topMatches[currentGitMatchIndex].userData.email" class="col-xs-12 divider text-center">
-          <div class="col-xs-12 col-sm-4 emphasis">
-            <p>Repos</p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.public_repos}} </strong></h2>
-
-            <a class="btn btn-info btn-block"><span class="fa fa-code"></span> View Repos </a>
-          </div>
-          <div class="col-xs-12 col-sm-4 emphasis">
-            <p><small>Followers</small></p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.followers}} </strong></h2>
-            <!-- Place this tag where you want the button to render. -->
-            <a class="btn btn-default btn-block"><span class="fa fa-github "></span> Follow </a>
-          </div>
-          <div class="col-xs-12 col-sm-4 emphasis alert-success">
-            <p><small><strong>Collaborate!</strong></small></p>
-            <h2><strong> <i class="fa fa-handshake-o" aria-hidden="true"></i> </strong></h2>
-            <a class="btn btn-success btn-block" data-target="#request-modal" role="button" data-toggle="modal"><span class=" fa fa-envelope-o "></span> Send Request</a>
-
-          </div>
-        </div>
-        <!-- Show if email not found-->
-        <div *ngIf="!topMatches[currentGitMatchIndex].userData.email" class="col-xs-12 divider text-center">
-          <div class="col-xs-12 col-sm-6 emphasis">
-            <p>Repos</p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.public_repos}} </strong></h2>
-
-            <a class="btn btn-info btn-block"><span class="fa fa-code"></span> View Repos </a>
-          </div>
-          <div class="col-xs-12 col-sm-6 emphasis">
-            <p><small>Followers</small></p>
-            <h2><strong> {{topMatches[currentGitMatchIndex].userData.followers}} </strong></h2>
-            <!-- Place this tag where you want the button to render. -->
-            <a class="btn btn-default btn-block"><span class="fa fa-github "></span> Follow </a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-  <div class="btn btn-primary" (click)="switchGitMatchChart(currentGitMatchIndex+1)">Next Chart Data</div>
-
 </div>
 
-<div *ngIf=" loading " class="modal loading ">
+<div *ngIf="loading" class="modal loading ">
   <h3 class="modal-title ">
     <p>{{loadingText}}...</p><i class="fa fa-cog fa-spin fa-3x fa-fw "></i>
     <span class="sr-only ">Loading...</span></h3>
 </div>
-<div id="overlay " *ngIf="overlay "></div>
+<div id="overlay" *ngIf="overlay"></div>
 <div *ngIf=" error " class="modal error ">
   <h3 class="modal-title ">
     <p>{{errorText}}...</p><i class="fa fa-error fa-3x fa-fw "></i>

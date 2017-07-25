@@ -27,8 +27,8 @@ export class GitMatchComponent implements OnInit {
 	currentGitMatchData = {};
 	GitUserLabels = [];
 	currentGitMatchLabels = [];
-	GitUserType = 'pie';
-	currentGitMatchType = 'pie';
+	GitUserType = 'doughnut';
+	currentGitMatchType = 'doughnut';
 	GitUserOptions = {};
 	currentGitMatchOptions = {};
 	currentGitMatchIndex = 0;
@@ -38,7 +38,7 @@ export class GitMatchComponent implements OnInit {
 	expandedSearchCount: number = 0;
 	uniqueLang = {};
 	// Used to
-	GITMATCHFACTOR = 14.843474908426657;
+	GITMATCHFACTOR = 10.857362047581296;
 	// Array of Local Developers User Data and Repos List
 	localDevs = []; //Array of objects {userData:{},repos:{}}
 	topMatches = []; // Array of Top Matches
@@ -63,7 +63,7 @@ export class GitMatchComponent implements OnInit {
 		let topCount = uniqueLang[0].count;
 		uniqueLang
 			// .filter(l => {
-			// 	return l.count + 7 >= topCount;
+			// 	return l.count + 9 >= topCount;
 			// })
 			.forEach(data => {
 				this.languageToken +=
@@ -86,7 +86,6 @@ export class GitMatchComponent implements OnInit {
 			this.GitUserLabels.push(d.language);
 		});
 
-		this.GitUserType = 'pie';
 		this.GitUserData = {
 			labels: this.GitUserLabels,
 			datasets: [
@@ -109,7 +108,6 @@ export class GitMatchComponent implements OnInit {
 			this.currentGitMatchLabels.push(d.language);
 		});
 
-		this.currentGitMatchType = 'pie';
 		this.currentGitMatchData = {
 			labels: this.currentGitMatchLabels,
 			datasets: [
@@ -155,7 +153,6 @@ export class GitMatchComponent implements OnInit {
 				this.currentGitMatchLabels.push(d.language);
 			});
 
-			this.currentGitMatchType = 'pie';
 			this.currentGitMatchData = {
 				labels: this.currentGitMatchLabels,
 				datasets: [
@@ -176,6 +173,7 @@ export class GitMatchComponent implements OnInit {
 
 	clearAll() {
 		this.localDevs = [];
+		this.currentGitMatchIndex = 0;
 		this.topMatches = [];
 		this.uniqueLang = [];
 		this.expandedSearchCount = 0;
@@ -401,7 +399,8 @@ export class GitMatchComponent implements OnInit {
 				if (this.uniqueLang[repo.language] !== undefined) {
 					// console.log(data.matchingLanguages);
 					if (data.matchingLanguages[repo.language] === undefined) {
-						repoScore = repoScore + Math.PI * 100;
+						repoScore =
+							repoScore + this.uniqueLang[repo.language] * 100;
 						data.matchingLanguages[repo.language] = 1;
 					} else {
 						repoScore =
@@ -411,7 +410,9 @@ export class GitMatchComponent implements OnInit {
 					}
 				}
 			});
-			data.score = Math.log(repoScore) * this.GITMATCHFACTOR;
+			data.score = Math.floor(
+				Math.log(repoScore) * this.GITMATCHFACTOR,
+			);
 			let matchingLanguagesHolder = [];
 			for (var key in data.matchingLanguages) {
 				// skip loop if the property is from prototype

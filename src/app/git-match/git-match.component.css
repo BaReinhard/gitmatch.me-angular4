@@ -29,6 +29,83 @@
 	box-sizing: border-box;
 	width: 25%;
 }
+.profile {
+	display: inline-block;
+}
+
+.profile-matches {
+	display: inline-block;
+	background: #f9fff7;
+}
+.divider {
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	margin-top: 5px;
+}
+.emphasis {
+	border-top: 5px solid transparent;
+}
+.emphasis:hover {
+	border-top: 5px solid #0e9f1a;
+}
+.emphasis h2 {
+	margin-bottom: 0;
+}
+.divider-right {
+	border-right: 1px solid rgba(0, 0, 0, 0.1);
+	margin-right: 5px;
+}
+
+.emphasis-right {
+	border-right: 5px solid transparent;
+}
+.emphasis-right:hover {
+	border-right: 5px solid #0e9f1a;
+}
+.emphasis-right h2 {
+	margin-bottom: 0;
+}
+.chart {
+	width: 80%;
+	margin: 15px auto;
+}
+
+.git-user-avatar {
+	border-radius: 50%;
+}
+chart {
+	width: 80%;
+	margin: 15px auto;
+}
+.app-container {
+	font-family: 'Roboto', sans-serif;
+	margin-top: 100px;
+}
+
+.app-container a:link {
+	text-decoration: none;
+}
+
+.app-container a:visited {
+	text-decoration: none;
+}
+
+.app-container a:hover {
+	text-decoration: none;
+}
+
+.app-container a:active {
+	text-decoration: none;
+}
+
+.app-container-bottom {
+	text-align: center;
+	margin-top: 20px;
+}
+/* Send Request*/
+.repo-repeater {
+	z-index: 2000;
+}
+
 .next {
 	float: right;
 	box-sizing: border-box;
@@ -80,6 +157,7 @@ input {
 	background-repeat: no-repeat;
 }
 .results {
+	box-sizing: border-box;
 	height: 100vh;
 	width: 100vw;
 	background: red; /* For browsers that do not support gradients */
@@ -106,6 +184,7 @@ input {
 }
 
 .modal {
+	box-sizing: border-box;
 	top: 30%;
 	z-index: 1000;
 	display: block;
@@ -124,6 +203,7 @@ input {
 	background-color: rgba(255, 255, 255, 0.8);
 }
 #overlay {
+	box-sizing: border-box;
 	position: fixed; /* Sit on top of the page content */
 	/* Hidden by default */
 	width: 100vw; /* Full width (cover the whole page) */
