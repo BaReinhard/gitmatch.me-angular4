@@ -1753,17 +1753,16 @@ var GitMatchService = (function () {
         this.getUserName = function (username) {
             username = _this.encode(username);
             var observArray = [];
-            observArray.push(_this.http.get("https://api.github.com/users/" + username, {
-                headers: headers,
-            }));
-            observArray.push(_this.http.get("https://api.github.com/users/" + username + "/repos?page=1&per_page=100&sort=updated", { headers: headers }));
+            observArray.push(_this.http.get("https://api.github.com/users/" + username
+            ));
+            observArray.push(_this.http.get("https://api.github.com/users/" + username + "/repos?page=1&per_page=100&sort=updated",));
             return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].forkJoin(observArray);
         };
         this.getLocalDevelopers = function (location, language) {
             location = _this.removeSpace(location);
             location = _this.encode(location);
             console.log("https://api.github.com/search/users?q=location%3A" + location + language);
-            return _this.http.get("https://api.github.com/search/users?q=location%3A" + location + language, { headers: headers });
+            return _this.http.get("https://api.github.com/search/users?q=location%3A" + location + language);
         };
         this.getAllUserRepos = function (usernames) {
             var observArray = [];
